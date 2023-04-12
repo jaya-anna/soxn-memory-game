@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Press+Start+2P&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  font-family: "Press Start 2P", cursive;
+  line-height: 1.2;
+}
+
+.body {
+  height: 100vh;
+  background-color: black;
+}
+
+.header {
+  color: white;
+  text-align: center;
+  height: 10vh;
+  font-size: 23px;
+  margin-top: 30px;
+}
+
+.info-text {
+  color: white;
+  font-size: 20px;
+margin-top: 20px;
+}
+.main {
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 50px;
+}
+
+.main h3 {
+  margin-top: -20px;
+  color: white;
+}
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 800px;
+  height: 500px;
+  margin-top: 40px;
+}
+
+.card {
+  cursor: pointer;
+  height: 160px;
+  width: 160px;
+}
+
+.restart {
+  all: unset;
+  cursor: pointer;
+  background-color: white;
+  padding: 10px 35px;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: "Press Start 2P", cursive;
+  margin-top: -30px;
+}
+
+.footer {
+  width: 100%;
+  height: 4vh;
+  font-size: 11px;
+  font-weight: bold;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  font-family: "Press Start 2P", cursive;
+}
