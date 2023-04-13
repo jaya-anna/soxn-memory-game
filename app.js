@@ -65,7 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // create board
   function createBoard() {
-
+    const voucherImage = document.querySelector(".voucher-image");
+    if (voucherImage) {
+      grid.removeChild(voucherImage);
+    }
     for (let i = 0; i < cardArray.length; i++) {
       const card = document.createElement("img");
       card.setAttribute("src", "images/image-blank.jpg");
@@ -96,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cards[optionTwoId].removeEventListener("click", flipCard);
       cardsWon.push(cardsChosen);
       const currentScore = cardsWon.length * 16.66;
-    resultDisplay.textContent = Math.floor(currentScore) + " %"
+      resultDisplay.textContent = Math.floor(currentScore) + " %";
     } else {
       cards[optionOneId].setAttribute("src", "images/image-blank.jpg");
       cards[optionTwoId].setAttribute("src", "images/image-blank.jpg");
@@ -104,14 +107,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     cardsChosen = [];
     cardsChosenId = [];
-   
+
     if (cardsWon.length === cardArray.length / 2) {
       grid.innerHTML = "";
       gameText.textContent = "Congratulations! You found them all! ";
-      resultDisplay.textContent = "100 %"
+      resultDisplay.textContent = "100 %";
       const voucherImage = new Image();
       voucherImage.src = "images/gutschein.jpg";
       grid.appendChild(voucherImage);
+      restartBtn.addEventListener("click", handleRestart);
     }
   }
 
@@ -128,15 +132,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //restart game
   function handleRestart() {
-    for (let i = 0; i < cardArray.length; i++) {
-      const card = document.querySelector(".card");
-      grid.removeChild(card);
+
+    const voucherImage = document.querySelector(".voucher-image");
+    if (voucherImage) {
+      grid.removeChild(voucherImage);
     }
+
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card) => grid.removeChild(card));
+
     cardsWon = [];
     cardsChosen = [];
     cardsChosenId = [];
-  
-    resultDisplay.textContent = Math.floor(cardsWon.length * 16.66)
+
     createBoard();
     gameText.textContent = "Start playing!";
   }
