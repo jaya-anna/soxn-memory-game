@@ -55,9 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
   cardArray.sort(() => 0.5 - Math.random());
 
   const grid = document.querySelector(".grid");
-  const resultDisplay = document.querySelector("#result");
+  //const resultDisplay = document.querySelector("#result");
   const gameText = document.querySelector(".info-text");
   const restartBtn = document.querySelector(".restart");
+  const voucher = document.querySelector(".voucher");
 
   let cardsChosen = [];
   let cardsChosenId = [];
@@ -65,10 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // create board
   function createBoard() {
-    const voucherImage = document.querySelector(".voucher-image");
-    if (voucherImage) {
-      grid.removeChild(voucherImage);
-    }
     for (let i = 0; i < cardArray.length; i++) {
       const card = document.createElement("img");
       card.setAttribute("src", "images/image-blank.jpg");
@@ -77,8 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
       card.addEventListener("click", flipCard);
       grid.appendChild(card);
     }
-    gameText.textContent = "Start playing!";
-    resultDisplay.textContent = "0 %";
+    gameText.textContent = "Los geht's!";
+    //restartBtn.remove()
+    //restartBtn.addEventListener("click", handleRestart);
   }
 
   // check for matches
@@ -86,38 +84,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const cards = document.querySelectorAll(".card");
     const optionOneId = cardsChosenId[0];
     const optionTwoId = cardsChosenId[1];
-
+  
     if (optionOneId == optionTwoId) {
       cards[optionOneId].setAttribute("src", "images/image-blank.jpg");
       cards[optionTwoId].setAttribute("src", "images/image-blank.jpg");
       gameText.textContent = "You have clicked the same image!";
     } else if (cardsChosen[0] === cardsChosen[1]) {
-      gameText.textContent = "You found a match!";
+      gameText.textContent = ":)";
+  
       cards[optionOneId].setAttribute("src", "images/background.jpg");
       cards[optionTwoId].setAttribute("src", "images/background.jpg");
       cards[optionOneId].removeEventListener("click", flipCard);
       cards[optionTwoId].removeEventListener("click", flipCard);
-      cardsWon.push(cardsChosen);
-      const currentScore = cardsWon.length * 16.66;
-      resultDisplay.textContent = Math.floor(currentScore) + " %";
+      cardsWon.push(cardsChosen[0]);
+    
+      // Show voucher image when all pairs are found
+      if (cardsWon.length === cardArray.length / 2) {
+        grid.innerHTML = "";
+        gameText.textContent = "Super! Du hast alle SOXN Paare gefunden!";
+  
+        const voucherImage = document.createElement("img");
+        voucherImage.src = "images/gutschein.jpg";
+        voucherImage.alt = "Voucher Image";
+        voucherImage.classList.add("voucher-image");
+        voucher.appendChild(voucherImage);
+  
+        restartBtn.addEventListener("click", handleRestart);
+      }
     } else {
       cards[optionOneId].setAttribute("src", "images/image-blank.jpg");
       cards[optionTwoId].setAttribute("src", "images/image-blank.jpg");
-      gameText.textContent = "Sorry, try again.";
+      gameText.textContent = ":(";
     }
+  
     cardsChosen = [];
     cardsChosenId = [];
-
-    if (cardsWon.length === cardArray.length / 2) {
-      grid.innerHTML = "";
-      gameText.textContent = "Congratulations! You found them all! ";
-      resultDisplay.textContent = "100 %";
-      const voucherImage = new Image();
-      voucherImage.src = "images/gutschein.jpg";
-      grid.appendChild(voucherImage);
-      restartBtn.addEventListener("click", handleRestart);
-    }
   }
+  
 
   // flip your card
   function flipCard() {
@@ -133,20 +136,24 @@ document.addEventListener("DOMContentLoaded", () => {
   //restart game
   function handleRestart() {
 
-    const voucherImage = document.querySelector(".voucher-image");
+    let voucherImage = document.querySelector(".voucher-image");
     if (voucherImage) {
-      grid.removeChild(voucherImage);
+      voucherImage.remove();
     }
-
+  
     const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => grid.removeChild(card));
+    cards.forEach((card) => {
+      card.removeEventListener("click", flipCard);
+      grid.removeChild(card);
+    });
+   
 
     cardsWon = [];
     cardsChosen = [];
     cardsChosenId = [];
 
     createBoard();
-    gameText.textContent = "Start playing!";
+    gameText.textContent = "Los geht's";
   }
 
   createBoard();
