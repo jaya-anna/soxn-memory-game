@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
   cardArray.sort(() => 0.5 - Math.random());
 
   const grid = document.querySelector(".grid");
-  //const resultDisplay = document.querySelector("#result");
   const gameText = document.querySelector(".info-text");
   const restartBtn = document.querySelector(".restart");
   const voucher = document.querySelector(".voucher");
@@ -75,8 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
       grid.appendChild(card);
     }
     gameText.textContent = "Los geht's!";
-    //restartBtn.remove()
-    //restartBtn.addEventListener("click", handleRestart);
+    restartBtn.remove()
+    
   }
 
   // check for matches
@@ -108,15 +107,15 @@ document.addEventListener("DOMContentLoaded", () => {
         voucherImage.alt = "Voucher Image";
         voucherImage.classList.add("voucher-image");
         voucher.appendChild(voucherImage);
-  
-        restartBtn.addEventListener("click", handleRestart);
+        voucher.appendChild(restartBtn);
+        
       }
     } else {
       cards[optionOneId].setAttribute("src", "images/image-blank.jpg");
       cards[optionTwoId].setAttribute("src", "images/image-blank.jpg");
       gameText.textContent = ":(";
     }
-  
+    restartBtn.addEventListener("click", handleRestart);
     cardsChosen = [];
     cardsChosenId = [];
   }
@@ -136,11 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //restart game
   function handleRestart() {
 
-    let voucherImage = document.querySelector(".voucher-image");
-    if (voucherImage) {
-      voucherImage.remove();
-    }
-  
+    voucher.innerHTML = "";
     const cards = document.querySelectorAll(".card");
     cards.forEach((card) => {
       card.removeEventListener("click", flipCard);
